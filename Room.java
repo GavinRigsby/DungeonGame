@@ -83,10 +83,6 @@ public class Room {
 			room += "*-*\n";
 		}
 		contentstring = content;
-		
-		
-		System.out.println("Room at " + x + "," + y + "\n" + room);
-		System.out.println(getItemContents());
 	}
 	
 	public int[] getCoordinates() {
@@ -95,6 +91,10 @@ public class Room {
 	
 	public String getContentString() {
 		return contentstring;
+	}
+	
+	public String getRoom() {
+		return room;
 	}
 	
 	public String getItemContents(){
@@ -138,5 +138,9 @@ public class Room {
 			items = items.substring(0, lastcomma) + " and " + items.substring(lastcomma + 1);
 		}
 		return itemstring + items + "\n";
+	}
+	
+	public String toString(){
+		return room + "\n" + getItemContents();
 	}
 }
