@@ -5,23 +5,29 @@ public class Dungeon {
 	public Dungeon(int size) {
 		dungeon = new Room[size][size];
 		Size = size;
+		//chooses random entrance and exit
 		int entrancex = (int) (Math.random() * size);
 		int entrancey = (int) (Math.random() * size);
 		int exitx = (int) (Math.random() * size);
 		int exity = (int) (Math.random() * size);
+		//makes sure entrance and exit can't occur in same room
 		while(entrancex == exitx && entrancey == exity) {
 			exitx = (int) (Math.random() * size);
 			exity = (int) (Math.random() * size);
 		}
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
+				//make entrance
 				if (i == entrancex && j == entrancey) {
 					dungeon[i][j] = new Room(false, false, true, false, false, false, size, i, j);
 				}
+				//make exit
 				else if (i == exitx && j == exity) {
 					dungeon[i][j] = new Room(false, false, false, true, false, false, size, i, j);
 				}
+				//make other room
 				else {
+					//Chance of item spawn change decimal to change rates
 					boolean monsterchance = (Math.random() > .8);
 					boolean pitchance = (Math.random() > .9);
 					boolean healingchance = (Math.random() > .9);
@@ -32,8 +38,11 @@ public class Dungeon {
 		}
 	}
 	
-	public void GetFullMap() {
+	//prints all the rooms and their contents as well as full map of dungeon
+	public String toString() {
 		String fullmap = "";
+		String roomcontents = "";
+		String separator = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
 		for (int i = 0; i < Size; i++) {
 			String topstring = "";
 			String middlestring = "";
@@ -61,6 +70,7 @@ public class Dungeon {
 				else {
 					middlestring += "|" + content;
 				}
+				roomcontents += dungeon[i][j].toString() + "\n" + separator;
 			}
 			//bottomline is only set on very bottom
 			//every other is taken care of by topstring
@@ -70,6 +80,6 @@ public class Dungeon {
 			//adds last * at end of every line then adds new line;
 			fullmap += topstring + "* \n" + middlestring + "* \n" + bottomstring;
 		}
-		System.out.println(fullmap);
+		return roomcontents + fullmap;
 	}
 }

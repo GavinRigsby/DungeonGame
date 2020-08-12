@@ -4,8 +4,9 @@ public class DungeonAdventure
 	{
 		Hero theHero;
 		Monster theMonster;
+		//number in dungeon is size eg: 7 = 7x7 dungeon
 		Dungeon dungeon = new Dungeon(7);
-		dungeon.GetFullMap();
+		System.out.println(dungeon.toString());
 
 		do{
          theHero = chooseHero();
