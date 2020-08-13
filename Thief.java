@@ -3,7 +3,8 @@ public class Thief extends Hero
 
     public Thief()
 	{
-		super("Thief", 75, 6, .8, 20, 40, .5);
+    	
+		super("Thief", Details.getThiefDetails());
 
 
 
@@ -12,12 +13,13 @@ public class Thief extends Hero
 	public void Attack(DungeonCharacter opponent)
 	{
 		double surprise = Math.random();
+		int numTurns = super.getNumTurns();
 		if (surprise <= .4)
 		{
 			System.out.println("Surprise attack was successful!\n" +
 								getName() + " gets an additional turn.");
-			numTurns++;
-			attack(opponent);
+			super.setNumTurns(numTurns + 1);
+			Attack(opponent);
 		}//end surprise
 		else if (surprise >= .9)
 		{
@@ -25,7 +27,7 @@ public class Thief extends Hero
 								" blocked your attack!");
 		}
 		else
-		    attack(opponent);
+		    Attack(opponent);
 
 
 	}//end surpriseAttack method
@@ -35,7 +37,7 @@ public class Thief extends Hero
 	{
 		super.battleChoices(opponent);
 		int choice;
-
+		int numTurns = super.getNumTurns();
 
 		do
 		{          

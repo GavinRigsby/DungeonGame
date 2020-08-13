@@ -1,13 +1,15 @@
-public abstract class Monster extends DungeonCharacter implements Attack {
+public abstract class Monster extends DungeonCharacter{
 
+	private Details monsterdetails;
     public Monster(final String name, final Details details) {
         super(name, details);
+        monsterdetails = details;
     }
 
     public void heal() {
-        boolean canHeal = (Math.random() <= super.getDetails().getChanceToHeal()) && (super.getHealthPoints() > 0);
+        boolean canHeal = (Math.random() <= monsterdetails.getChanceToHeal()) && (monsterdetails.getHealthPoints() > 0);
         int hp = 0;
-        int[] healRange = super.getDetails().getHealRange();
+        int[] healRange = monsterdetails.getHealRange();
         if (canHeal) {
             hp = (int) (Math.random() * (healRange[1] - healRange[0] + 1)) + healRange[0];
             this.addHitPoints(hp);
@@ -16,12 +18,12 @@ public abstract class Monster extends DungeonCharacter implements Attack {
 
     public void addHitPoints(final int hp) {
         super.addHitPoints(hp);
-        System.out.println(super.getName() + " healed theirself for " + hp + " points.\n" + "Total hit points remaining: " + super.getHitPoints());
+        System.out.println(super.getName() + " healed themself for [" + hp + "] points.\n" + super.getName() + " has " + super.getHitPoints() + " hit points remaining");
         System.out.println();
     }
 
-    public void subtractHitPoints(final int hp) {
-        super.subtractHitPoints(hp);
+    public void subtractHitPoints(final int hp, final DungeonCharacter opponent) {
+        super.subtractHitPoints(hp, opponent);
         this.heal();
     }
 }

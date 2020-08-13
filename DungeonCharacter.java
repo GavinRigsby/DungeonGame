@@ -1,7 +1,9 @@
-public abstract class DungeonCharacter implements Attack
+import java.util.Scanner;
+
+public abstract class DungeonCharacter
 {
 
-	private String name;
+   private String name;
    private int hitPoints;
    private int attackSpeed;
    private double chanceToHit;
@@ -12,15 +14,20 @@ public abstract class DungeonCharacter implements Attack
 //-----------------------------------------------------------------
 //explicit constructor to initialize instance variables -- it is called
 // by derived classes
-	protected DungeonCharacter(String name, int hitPoints, int attackSpeed,
-				     double chanceToHit, int damageMin, int damageMax)
+	protected DungeonCharacter(String name, Details details)
 	{
-
-		setName(name);
-      setHitPoints(hitPoints);
-      setAttackSpeed(attackSpeed);
-      setChanceToHit(chanceToHit);
-      setDamageRange(damageMin,damageMax);
+	  if (this instanceof Hero) {
+		  setHeroName();
+	  }
+	  else {
+		  setName(name);  
+	  }
+      setHitPoints(details.getHealthPoints());
+      setAttackSpeed(details.getAttackSpeed());
+      setChanceToHit(details.getChanceToHit());
+      int mindamage = details.getDamageRange()[0];
+      int maxdamage = details.getDamageRange()[1];
+      setDamageRange(mindamage,maxdamage);
 
 	}//end constructor
 
@@ -31,6 +38,14 @@ public abstract class DungeonCharacter implements Attack
    public void setName(String name) {
         this.name = name;
     }
+   
+   public void setHeroName() {
+	    @SuppressWarnings("resource")
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Enter your hero's name: ");
+		String name = sc.nextLine();
+		setName(name);
+   }
 
    public void setAttackSpeed(final int attackSpeed) { 
         this.attackSpeed = attackSpeed; 
@@ -78,7 +93,6 @@ This method is called by: heal method of monsters and Sorceress
 			System.out.println("Hitpoint amount must be positive.");
 		else
 		{
-			this.hitPoints += hitPoints;
 			//System.out.println("Remaining Hit Points: " + hitPoints);
 
 		}
@@ -95,7 +109,7 @@ Returns: nothing
 This method calls: nothing
 This method is called by: overridden versions in Hero and Monster
 ---------------------------------------------------------*/
-	public void subtractHitPoints(int hitPoints)
+	public void subtractHitPoints(int hitPoints, DungeonCharacter opponent)
 	{
 		if (hitPoints <0)
 			System.out.println("Hitpoint amount must be positive.");
@@ -104,9 +118,9 @@ This method is called by: overridden versions in Hero and Monster
 			this.hitPoints -= hitPoints;
 			if (this.hitPoints < 0)
 				this.hitPoints = 0;
-			System.out.println(getName() + " hit " +
+			System.out.println(opponent.getName() + " hit " + getName() +
 								" for <" + hitPoints + "> points damage.");
-			System.out.println(getName() + " now has " +
+			System.out.println( getName() + " now has " +
 								getHitPoints() + " hit points remaining.");
 			System.out.println();
 		}//end else if
@@ -155,7 +169,7 @@ hero classes and externally
 			damage = (int)(Math.random() * (damageMax - damageMin + 1))
 						+ damageMin ;
                   
-			opponent.subtractHitPoints(damage);
+			opponent.subtractHitPoints(damage, this);
 		}//end if can attack
 		else
 		{

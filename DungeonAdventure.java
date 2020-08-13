@@ -25,7 +25,9 @@ public class DungeonAdventure
 		System.out.println("Choose a hero:\n" +
 					       "1. Warrior\n" +
 						   "2. Sorceress\n" +
-						   "3. Thief");
+						   "3. Thief\n" +
+						   "4. Archer Queen\n" +
+						   "5. Healer");
 		choice = Keyboard.readInt();
       
       return factory.createHero(choice);

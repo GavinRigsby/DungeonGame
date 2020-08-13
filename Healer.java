@@ -1,20 +1,20 @@
 public class Healer extends Hero {
 
-    public Healer(final String name) {
-        super(name, Details.getHealerDetails());
+    public Healer() {
+        super("Healer", Details.getHealerDetails());
     }
 
     public void heal() {
         int hp;
-        int[] healRange = super.getDetails().getHealDetails();
+        int[] healRange = Details.getHealerDetails().getHealRange();
 
         hp = (int) (Math.random() * (healRange[1] - healRange[0] + 1)) + healRange[0];
         super.addHitPoints(hp);
-        System.out.println(super.getName() + " added [" + hp + "] points.\n" + "Total hit points remaining are: " + super.getDetails().getHitPoints());
+        System.out.println(super.getName() + " added [" + hp + "] points.\n" + "Total hit points remaining are: " + this.getHitPoints());
         System.out.println();
     }
 
-    public void attack(DungeonCharacter opponent) {
+    public void Attack(DungeonCharacter opponent) {
         if (opponent == null)
             throw new IllegalArgumentException("Opponent passed as null...");
 

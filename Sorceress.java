@@ -6,7 +6,7 @@ public class Sorceress extends Hero
 //-----------------------------------------------------------------
     public Sorceress()
 	{
-		super("Sorceress", 75, 5, .7, 25, 50, .3);
+		super("Sorceress", Details.getSorceressDetails());
 
     }//end constructor
     
@@ -52,6 +52,7 @@ public class Sorceress extends Hero
     public void battleChoices(DungeonCharacter opponent)
 	{
 		super.battleChoices(opponent);
+		int numTurns = super.getNumTurns();
 		int choice;
 
 		do

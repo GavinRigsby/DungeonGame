@@ -82,7 +82,7 @@ public class Details {
     //         minHeal, maxHeal, chanceToBlock, chanceToHeal)
     
     public static Details getWarriorDetails() {
-        return new Details(125, 4, .8, 35, 60, 0.2, 0.0, 0.0, 0.0);
+        return new Details(125, 4, .8, 35, 60, 0.2, 0.0, 0, 0);
     }
 
     public static Details getArcherQueenDetails() {

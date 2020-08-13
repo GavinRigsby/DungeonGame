@@ -4,7 +4,7 @@ public class Warrior extends Hero
     public Warrior()
 	{
 
-		super("Warrior", 125, 4, .8, 35, 60, .2);
+		super("Warrior", Details.getWarriorDetails());
 
 
     }//end constructor
@@ -17,7 +17,7 @@ public class Warrior extends Hero
 			int blowPoints = (int)(Math.random() * 76) + 100;
 			System.out.println(getName() + " lands a CRUSHING BLOW for " + blowPoints
 								+ " damage!");
-			opponent.subtractHitPoints(blowPoints);
+			opponent.subtractHitPoints(blowPoints, this);
 		}//end blow succeeded
 		else
 		{
@@ -40,7 +40,7 @@ public class Warrior extends Hero
     public void battleChoices(DungeonCharacter opponent)
 	{
 		int choice;
-
+		int numTurns = super.getNumTurns();
 		super.battleChoices(opponent);
 
 		do

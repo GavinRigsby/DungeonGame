@@ -1,16 +1,20 @@
-public abstract class Hero extends DungeonCharacter implements Attack {
+
+
+public abstract class Hero extends DungeonCharacter{
 
     private int numTurns;
     private int[] inventory; //[healthPotions, visionPotions]
     private int pillarsFound;
+    private Details herodetails;
 
     public Hero(final String name, final Details details) {
-        super(name, details);
+    	super(name, details);
+        herodetails = details;
         setInventory();
         setPillars();
     }
 
-    public String getName() {
+	public String getName() {
         return super.getName();
     }
 
@@ -23,29 +27,25 @@ public abstract class Hero extends DungeonCharacter implements Attack {
     }
 
     public boolean defend() {
-        return Math.random() <= super.getDetails().getChanceToBlock();
-    }
-
-    public void attack(DungeonCharacter opponent) {
-        super.attack(opponent);
+        return Math.random() <= herodetails.getChanceToBlock();
     }
 
     public void battleChoices(final DungeonCharacter opponent) {
         if (opponent == null)
             throw new IllegalArgumentException("Opponent passed as null...");
 
-        setNumTurns(super.getDetails().getAttackSpeed() / opponent.getDetails().getAttackSpeed());
+        setNumTurns(herodetails.getAttackSpeed() / opponent.getAttackSpeed());
         if (getNumTurns() == 0) {
             setNumTurns(getNumTurns() + 1);
         }
         System.out.println("Number of turns this round is: " + getNumTurns());
     }
 
-    public void subtractHitPoints(final int hp) {
+    public void subtractHitPoints(final int hp, final DungeonCharacter opponent) {
         if (defend()) {
             System.out.println(super.getName() + " Blocked the attack!");
         } else {
-            super.subtractHitPoints(hp);
+            super.subtractHitPoints(hp, opponent);
         }
     }
 
@@ -102,6 +102,6 @@ public abstract class Hero extends DungeonCharacter implements Attack {
                 + "Hitpoints: " + super.getHitPoints() + "\n"
                 + "Total Healing Potions: " + this.inventory[0] + "\n"
                 + "Total Vision Potions: " + this.inventory[1] + "\n"
-                + "Total Pillars of OO Found: " + getFoundPillars();
+                + "Total Pillars of OO Found: " + this.pillarsFound + "/4";
     }
 }

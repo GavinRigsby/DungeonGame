@@ -1,7 +1,7 @@
 public class ArcherQueen extends Hero {
 
-    public ArcherQueen(final String name) {
-        super(name, Details.getArcherQueenDetails());
+    public ArcherQueen() {
+        super("Archer Queen", Details.getArcherQueenDetails());
     }
 
     public void createHealthPotion() {
@@ -9,9 +9,9 @@ public class ArcherQueen extends Hero {
         System.out.println(super.getName() + " attempts to create a health potion!");
         if (Math.random() < .4) {
             super.addHealthPotion();
-            System.out.println("Success!");
+            System.out.println("Success!\n");
         } else {
-            System.out.println("Whoops...Attempt failed!");
+            System.out.println("Whoops...Attempt failed!\n");
         }
     }
 
@@ -20,13 +20,13 @@ public class ArcherQueen extends Hero {
         System.out.println(super.getName() + " attempts to create a vision potion!");
         if (Math.random() < .05) {
             super.addVisionPotion();
-            System.out.println("Success!");
+            System.out.println("Success!\n");
         } else {
-            System.out.println("Whoops...Attempt failed!");
+            System.out.println("Whoops...Attempt failed!\n");
         }
     }
 
-    public void attack(DungeonCharacter opponent) {
+    public void Attack(DungeonCharacter opponent) {
         if (opponent == null)
             throw new IllegalArgumentException("Opponent passed as null...");
 
