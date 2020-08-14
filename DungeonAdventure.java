@@ -1,11 +1,10 @@
+
 public class DungeonAdventure
 {
-   private static int Size = 7;
+   private static int Size = 5;
    private static Dungeon dungeon = new Dungeon(Size);
    private static Hero theHero;
    private static boolean playagain = true;
-   
-   
    public static void main(String[] args)
 	{
 	   	
@@ -21,6 +20,7 @@ public class DungeonAdventure
         int ex = dungeon.getEntrance()[0];
         int ey = dungeon.getEntrance()[1];
         theHero.setCoords(ex, ey);
+        theHero.stepStart(ex, ey);
         System.out.println("\n" + dungeon.getRoom(ex, ey).toString());
         System.out.println("You start in a room at " + ex + "," + ey + "\n");
         
@@ -33,9 +33,11 @@ public class DungeonAdventure
         do{
 		 System.out.println("What would you like to do?\n"
 		 		+ "1. Move Rooms\n"
-				+ "2. Inpect self\n"
+				+ "2. Inspect self\n"
 		 		+ "3. Use Vision Potion\n"
-				+ "4. Use Healing Potion\n");
+				+ "4. Use Healing Potion\n"
+				+ "5. Map Atlas\n"
+				+ "6. Trace your steps\n");
 		 
 		 int choice = Keyboard.readInt();
 		 if (choice == 1){
@@ -65,6 +67,7 @@ public class DungeonAdventure
 	 			battle(theHero, theMonster);
 	         }
 	         if (contents.contains("a pit")) {
+	        	 fallInPit();
 	        	 //implement pit damage function
 	        	 room = new Room(true, false, false, false, false, false, -1, Size, x, y);
 	         }
@@ -73,7 +76,7 @@ public class DungeonAdventure
 	         }
 	         else if (contents.contains("the exit")) {
 	        	 CheckForPillars();
-	        	 room = new Room(false, false, true, false, false, false, -1, Size, x, y);
+	        	 room = new Room(false, false, false, true, false, false, -1, Size, x, y);
 	         }
 	         
 	         else{
@@ -95,6 +98,22 @@ public class DungeonAdventure
 		 else if (choice == 4) {
 			 theHero.useHealthPotion();
 		 }
+		 else if (choice == 5) {
+			 System.out.println("\nMap Atlas\n"
+			 				  + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+					 		  + "E is Empty Room\n"
+					 		  + "1 - 4 are pillars of OO\n"
+					 		  + "I is the Enterance\n"
+					 		  + "O is the Exit\n"
+					 		  + "P is a pit (careful)\n"
+					 		  + "X is a Monster (careful)\n"
+					 		  + "V is a Vision Potion\n"
+					 		  + "H is a Healing Potion\n"
+					 		  + "M is Multiple of the above\n");
+		 }
+		 else if (choice == 6) {
+			 theHero.traceMySteps();
+		 }
 		 else if (choice != Integer.MIN_VALUE){
 			 System.out.println("Please choose a valid option\n");
 		 }
@@ -103,7 +122,14 @@ public class DungeonAdventure
 
     }//end main method
    
-   	public static void CheckForPillars() {
+   	private static void fallInPit() {
+   		int randomdamage = (int) (Math.random()*(20-1))+1;
+   		System.out.println(theHero.getName() + " fell in a pit and took <" + randomdamage + "> points of damage");
+   		theHero.setHitPoints(theHero.getHitPoints() - randomdamage);
+		System.out.println( theHero.getName() + " now has " + theHero.getHitPoints() + " hit points remaining.");
+   	}
+
+	public static void CheckForPillars() {
    		int pillars = theHero.getPillarsFound();
    		if (pillars == 4) {
    			playAgain();
@@ -123,10 +149,10 @@ public class DungeonAdventure
     	if (x != 0) {
     		System.out.println("North (n)");
     	}
-    	if (x != Size) {
+    	if (x != Size - 1) {
     		System.out.println("South (s)");
     	}
-    	if (y != Size) {
+    	if (y != Size - 1) {
     		System.out.println("East (e)");
     	}
     	if (y != 0) {
@@ -243,6 +269,8 @@ public class DungeonAdventure
 		else
 			System.out.println("Quitters never win ;-)\n");
 	}
+	
+	
 	
 	
 }

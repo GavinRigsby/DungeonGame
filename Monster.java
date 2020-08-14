@@ -17,8 +17,8 @@ public abstract class Monster extends DungeonCharacter{
     }
 
     public void addHitPoints(final int hp) {
+    	System.out.println(super.getName() + " healed themself for [" + hp + "] points.\n");
         super.addHitPoints(hp);
-        System.out.println(super.getName() + " healed themself for [" + hp + "] points.\n" + super.getName() + " has " + super.getHitPoints() + " hit points remaining");
         System.out.println();
     }
 

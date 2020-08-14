@@ -1,5 +1,3 @@
-
-
 public abstract class Hero extends DungeonCharacter{
 
     private int numTurns;
@@ -7,6 +5,7 @@ public abstract class Hero extends DungeonCharacter{
     private int pillarsFound;
     private Details herodetails;
     private int[] coords;
+    private String steps = "";
 
     public Hero(final String name, final Details details) {
     	super(name, details);
@@ -17,6 +16,26 @@ public abstract class Hero extends DungeonCharacter{
     
     public void setCoords(int x, int y) {
     	coords = new int[] {x,y};
+    	if (steps != "") {
+    		int oldx = Integer.parseInt(steps.substring(steps.length() - 3, steps.length() - 2));
+        	int oldy = Integer.parseInt(steps.substring(steps.length() - 1, steps.length()));
+        	if (oldx > x) {
+        		steps += "\nmoved north to room at " + x + "," + y;
+        	}else if(oldx < x) {
+        		steps += "\nmoved south to room at " + x + "," + y;
+        	}
+        	if (oldy > y) {
+        		steps += "\nmoved east to room at " + x + "," + y;
+        	}else if(oldy < y) {
+        		steps += "\nmoved west to room at " + x + "," + y;
+        	}
+        	
+    	}
+    	
+    }
+    
+    public void stepStart(int x, int y) {
+    	steps = "started at room at " + x + "," + y;
     }
     
     public int[] getCoords(){
@@ -96,6 +115,10 @@ public abstract class Hero extends DungeonCharacter{
             this.addHitPoints(randomincrease);
         }else
             System.out.println("Whoops...No Health Potions in your Inventory!\n");
+    }
+    
+    public void traceMySteps() {
+    	System.out.println(steps + " (you are here now)\n");
     }
 
     public void addVisionPotion() {

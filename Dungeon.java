@@ -149,39 +149,64 @@ public class Dungeon {
 						}
 						//System.out.println(split[h].substring(0,2));
 					}
-					if (i == 1) {
-						try {
-							if (dungeon[x][y].getRoom().split("\n")[2].contains("***") || dungeon[x+1][y].getRoom().split("\n")[2].contains("***")) {
-								bottomstring += "**";
-							}
-							else {
-								bottomstring += "*-";
-							}
-						}
-						catch (Exception e) {
-							bottomstring += "*-";
-						}
+					if(i == 1 && x == Size - 2) {
+						bottomstring += "**";
 					}
+					else if (i == 0 && x == Size - 1){
+						bottomstring += "**";
+					}
+					else{
+						bottomstring += "*-";
+					}
+					
 				}
 				catch(Exception e) {}
 			}
 			String middleend = "";
-			if (dungeon[x][y].getRoom().split("\n")[1].contains("|") || dungeon[x][y+1].getRoom().split("\n")[2].contains("|")) {
+			if(y == Size - 2) {
+				try {
+					if (dungeon[x][y+1].getRoom().split("\n")[1].substring(1).contains("|")) {
+						middleend = "|";
+					}
+					else {
+						middleend = "*";
+					}
+				}
+				catch (Exception e) {
+					middleend = "*";
+				}
+			}
+			else if (y == Size - 1) {
+				try {
+					if (dungeon[x][y].getRoom().split("\n")[1].substring(1).contains("|")) {
+						middleend = "|";
+					}
+					else {
+						middleend = "*";
+					}
+				}
+				catch (Exception e) {
+					middleend = "*";
+				}
+			}else {
 				middleend = "|";
 			}
-			else {
-				middleend = "*";
-			}
+			
 			vision += topstring;
 			if (topstring != "") {
 				vision += "*" + "\n" + middlestring + middleend + "\n";
 			}
-			if (i == 1) {
-				vision += bottomstring + "*";
+			if (i == 1 || (i == 0 && x == Size - 1)) {
+				if (i == 0 && x == Size - 1 && (y == Size - 1 || y == Size - 2)) {
+					vision += bottomstring;
+				}else {
+					vision += bottomstring + "*";
+				}
+				
 			}
 			
 		}
-		System.out.println(vision);
+		System.out.println("\n"+vision+"\n");
 	}
 	
 	
