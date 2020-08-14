@@ -93,8 +93,8 @@ This method is called by: heal method of monsters and Sorceress
 			System.out.println("Hitpoint amount must be positive.");
 		else
 		{
-			//System.out.println("Remaining Hit Points: " + hitPoints);
-
+			this.hitPoints += hitPoints;
+			System.out.println(this.getName() + " now has " + this.getHitPoints() + " hitpoints\n");
 		}
 	}//end addHitPoints method
 

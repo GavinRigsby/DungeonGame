@@ -26,4 +26,11 @@ public abstract class Monster extends DungeonCharacter{
         super.subtractHitPoints(hp, opponent);
         this.heal();
     }
+
+	public void randomDrop(Hero opponent) {
+		if (Math.random() > .9) {
+			System.out.println(this.getName() + "dropped a healing potion!");
+			opponent.addHealthPotion();
+		}
+	}
 }

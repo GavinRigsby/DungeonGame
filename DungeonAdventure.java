@@ -26,6 +26,9 @@ public class DungeonAdventure
         
         //testing vision potion
         //theHero.addVisionPotion();
+        
+        //testing health potion
+        //theHero.addHealthPotion();
 		
         do{
 		 System.out.println("What would you like to do?\n"
@@ -49,11 +52,11 @@ public class DungeonAdventure
 	        	 theHero.addPillar();
 	         }
 	         if (contents.contains("a vision potion")) {
-	        	 System.out.println("You found one of the pillars of OO");
+	        	 System.out.println("You found a vision potion");
 	        	 theHero.addVisionPotion();
 	         }
 	         if (contents.contains("a healing potion")) {
-	        	 System.out.println("You found one of the pillars of OO");
+	        	 System.out.println("You found a healing potion");
 	        	 theHero.addHealthPotion();
 	         }
 	         if (contents.contains("a monster")) {
@@ -79,18 +82,21 @@ public class DungeonAdventure
 	         
 	         dungeon.setRoom(x, y, room);
 		 }
-		 if (choice == 2) {
+		 else if (choice == 2) {
 			 System.out.println(theHero.toString());
 		 }
-		 if (choice == 3) {
+		 else if (choice == 3) {
 			 if(theHero.useVisionPotion()) {
 				 int x = theHero.getCoords()[0];
 		         int y = theHero.getCoords()[1];
 				 dungeon.Vision(x , y);
 			 }
 		 }
-		 if (choice == 4) {
+		 else if (choice == 4) {
 			 theHero.useHealthPotion();
+		 }
+		 else if (choice != Integer.MIN_VALUE){
+			 System.out.println("Please choose a valid option\n");
 		 }
 		 
       }while (theHero.getHitPoints() > 0 && playagain);
@@ -136,8 +142,7 @@ public class DungeonAdventure
         		theHero.setCoords(x - 1, y);
         	}
     	}
-    	
-    	if (choice == 'S' || choice == 's') {
+    	else if (choice == 'S' || choice == 's') {
     		if (x == Size) {
     			System.out.println("That is not a valid option\n");
 				ChooseDirection();
@@ -146,7 +151,7 @@ public class DungeonAdventure
         	}
     	}
     	
-    	if (choice == 'E' || choice == 'e') {
+    	else if (choice == 'E' || choice == 'e') {
     		if (y == Size) {
     			System.out.println("That is not a valid option\n");
 				ChooseDirection();
@@ -155,13 +160,17 @@ public class DungeonAdventure
         	}
     	}
     	
-    	if (choice == 'W' || choice == 'w') {
+    	else if (choice == 'W' || choice == 'w') {
     		if (y == 0) {
     			System.out.println("That is not a valid option\n");
 				ChooseDirection();
         	}else {
         		theHero.setCoords(x, y - 1);
         	}
+    	}
+    	else {
+    		System.out.println("That is not a valid option\n");
+			ChooseDirection();
     	}
     }
 
@@ -225,8 +234,10 @@ public class DungeonAdventure
 			    theMonster.attack(theHero);   
 		}
 
-		if (theMonster.getHitPoints() == 0)
-		    System.out.println(theHero.getName() + " was victorious!\n");
+		if (theMonster.getHitPoints() == 0) {
+			System.out.println(theHero.getName() + " was victorious!\n");
+			theMonster.randomDrop(theHero);
+		}
 		else if (theHero.getHitPoints() == 0)
 			System.out.println(theHero.getName() + " was defeated :-(\n");
 		else

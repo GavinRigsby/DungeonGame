@@ -90,7 +90,10 @@ public abstract class Hero extends DungeonCharacter{
     public void useHealthPotion() {
         if(this.inventory[0] > 0) {
             this.inventory[0]--;
-            this.addHitPoints(15);
+            //random value between 15 and 25
+            int randomincrease = (int) (Math.random()*(25-15))+15;
+            System.out.println("You used a healing potion and healed [" + randomincrease + "] hitpoints");
+            this.addHitPoints(randomincrease);
         }else
             System.out.println("Whoops...No Health Potions in your Inventory!\n");
     }
