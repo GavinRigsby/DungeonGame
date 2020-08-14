@@ -6,12 +6,21 @@ public abstract class Hero extends DungeonCharacter{
     private int[] inventory; //[healthPotions, visionPotions]
     private int pillarsFound;
     private Details herodetails;
+    private int[] coords;
 
     public Hero(final String name, final Details details) {
     	super(name, details);
         herodetails = details;
         setInventory();
         setPillars();
+    }
+    
+    public void setCoords(int x, int y) {
+    	coords = new int[] {x,y};
+    }
+    
+    public int[] getCoords(){
+    	return coords;
     }
 
 	public String getName() {

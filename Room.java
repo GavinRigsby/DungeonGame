@@ -6,11 +6,16 @@ public class Room {
 	private boolean[] contents;
 	private String contentstring;
 	
-	public Room(boolean pit, boolean monster, boolean entrance, boolean exit, boolean visionpotion, boolean healingpotion, int size, int x, int y){
+	public Room(boolean pit, boolean monster, boolean entrance, boolean exit, boolean visionpotion, boolean healingpotion, int pillar, int size, int x, int y){
 		Coordinates = new int[] {x,y};
-		contents = new boolean[] {pit, monster, entrance, exit, visionpotion, healingpotion};
 		String content = "";
-		if ((pit || monster || entrance || exit || visionpotion || healingpotion) == false) {
+		boolean haspillar = false;
+		if (pillar != -1) {
+			haspillar = true;
+			content = Integer.toString(pillar);
+		}
+		contents = new boolean[] {pit, monster, entrance, exit, visionpotion, healingpotion, haspillar};
+		if ((pit || monster || entrance || exit || visionpotion || healingpotion || haspillar) == false) {
 			content = "E";
 		}
 		else {
@@ -29,16 +34,10 @@ public class Room {
 				if(content == "") {
 					content = "I";
 				}
-				else {
-					content = "M";
-				}
 			}
 			if(exit) {
 				if(content == "") {
 					content = "O";
-				}
-				else {
-					content = "M";
 				}
 			}
 			if(visionpotion) {
@@ -105,6 +104,10 @@ public class Room {
 		if (contents[3]) {
 			
 			return itemstring + "the exit";
+		}
+		if (contents[6]) {
+			
+			return itemstring + "a pillar of 00";
 		}
 		
 		String items = "";

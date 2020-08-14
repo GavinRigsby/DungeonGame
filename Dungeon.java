@@ -2,29 +2,67 @@
 public class Dungeon {
 	private Room[][] dungeon;
 	private int Size; 
+	private int[] EntranceCoords;
+	private int[] ExitCoords;
+	
 	public Dungeon(int size) {
 		dungeon = new Room[size][size];
 		Size = size;
-		//chooses random entrance and exit
+		//Sets up entrance, exit, and pillars of OO
 		int entrancex = (int) (Math.random() * size);
 		int entrancey = (int) (Math.random() * size);
+		EntranceCoords = new int[] {entrancex, entrancey};
 		int exitx = (int) (Math.random() * size);
 		int exity = (int) (Math.random() * size);
-		//makes sure entrance and exit can't occur in same room
-		while(entrancex == exitx && entrancey == exity) {
-			exitx = (int) (Math.random() * size);
-			exity = (int) (Math.random() * size);
-		}
+		ExitCoords = new int[] {exitx,exity};
+		int pillar1x = (int) (Math.random() * size);
+		int pillar1y = (int) (Math.random() * size);
+		int pillar2x = (int) (Math.random() * size);
+		int pillar2y = (int) (Math.random() * size);
+		int pillar3x = (int) (Math.random() * size);
+		int pillar3y = (int) (Math.random() * size);
+		int pillar4x = (int) (Math.random() * size);
+		int pillar4y = (int) (Math.random() * size);
+		String[] specrooms = {entrancex + ","+ entrancey, exitx + "," + exity, pillar1x + "," +pillar1y, pillar2x + "," + pillar2y, pillar3x + "," + pillar3y, pillar4x + "," + pillar4y};
+		specrooms = VerifyItemSpecificRooms(specrooms, size);
+		entrancex = Integer.parseInt(specrooms[0].substring(0, 1));
+		entrancey = Integer.parseInt(specrooms[0].substring(2, 3));
+		exitx = Integer.parseInt(specrooms[1].substring(0, 1));
+		exity = Integer.parseInt(specrooms[1].substring(2, 3));
+		pillar1x = Integer.parseInt(specrooms[2].substring(0, 1));
+		pillar1y = Integer.parseInt(specrooms[2].substring(2, 3));
+		pillar2x = Integer.parseInt(specrooms[3].substring(0, 1));
+		pillar2y = Integer.parseInt(specrooms[3].substring(2, 3));
+		pillar3x = Integer.parseInt(specrooms[4].substring(0, 1));
+		pillar3y = Integer.parseInt(specrooms[4].substring(2, 3));
+		pillar4x = Integer.parseInt(specrooms[5].substring(0, 1));
+		pillar4y = Integer.parseInt(specrooms[5].substring(2, 3));
+		
+		System.out.println(entrancex + "   " + entrancey);
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				//make entrance
 				if (i == entrancex && j == entrancey) {
-					dungeon[i][j] = new Room(false, false, true, false, false, false, size, i, j);
+					dungeon[i][j] = new Room(false, false, true, false, false, false, -1, size, i, j);	
 				}
 				//make exit
 				else if (i == exitx && j == exity) {
-					dungeon[i][j] = new Room(false, false, false, true, false, false, size, i, j);
+					dungeon[i][j] = new Room(false, false, false, true, false, false, -1, size, i, j);
 				}
+				//make pillars
+				else if (i == pillar1x && j == pillar1y) {
+					dungeon[i][j] = new Room(false, false, false, false, false, false, 1, size, i, j);
+				}
+				else if (i == pillar2x && j == pillar2y) {
+					dungeon[i][j] = new Room(false, false, false, false, false, false, 2, size, i, j);
+				}
+				else if (i == pillar3x && j == pillar3y) {
+					dungeon[i][j] = new Room(false, false, false, false, false, false, 3, size, i, j);
+				}
+				else if (i == pillar4x && j == pillar4y) {
+					dungeon[i][j] = new Room(false, false, false, false, false, false, 4, size, i, j);
+				}
+				
 				//make other room
 				else {
 					//Chance of item spawn change decimal to change rates
@@ -32,10 +70,58 @@ public class Dungeon {
 					boolean pitchance = (Math.random() > .9);
 					boolean healingchance = (Math.random() > .9);
 					boolean visionchance = (Math.random() > .9);
-					dungeon[i][j] = new Room(pitchance, monsterchance, false, false, visionchance, healingchance, size, i, j);
+					dungeon[i][j] = new Room(pitchance, monsterchance, false, false, visionchance, healingchance, -1, size, i, j);
 				}
 			}
 		}
+	}
+	
+	public Room getRoom(int x, int y){
+		return dungeon[x][y];
+	}
+	
+	public int[] getEntrance(){
+		return EntranceCoords;
+	}
+	public int[] getExit() {
+		return ExitCoords;
+	}
+	
+	private String[] VerifyItemSpecificRooms(String[] specificrooms, int size) {
+		String test = "";
+		for (int i = 0; i < specificrooms.length; i++) {
+			if (test.contains(specificrooms[i])) {
+				switch(i) {
+					case 0:
+						int entrancex = (int) (Math.random() * size);
+						int entrancey = (int) (Math.random() * size);
+						specificrooms[0] = entrancex + "," + entrancey;
+					case 1:
+						int exitx = (int) (Math.random() * size);
+						int exity = (int) (Math.random() * size);
+						specificrooms[1] = exitx + "," + exity;
+					case 2:
+						int pillar1x = (int) (Math.random() * size);
+						int pillar1y = (int) (Math.random() * size);
+						specificrooms[2] = pillar1x + "," + pillar1y;
+					case 3:
+						int pillar2x = (int) (Math.random() * size);
+						int pillar2y = (int) (Math.random() * size);
+						specificrooms[3] = pillar2x + "," + pillar2y;
+					case 4:
+						int pillar3x = (int) (Math.random() * size);
+						int pillar3y = (int) (Math.random() * size);
+						specificrooms[4] = pillar3x + "," + pillar3y;
+					case 5:
+						int pillar4x = (int) (Math.random() * size);
+						int pillar4y = (int) (Math.random() * size);
+						specificrooms[5] = pillar4x + "," + pillar4y;
+				}
+				return VerifyItemSpecificRooms(specificrooms, size);
+			}
+			test += "   ";
+		}
+		return specificrooms;
 	}
 	
 	//prints all the rooms and their contents as well as full map of dungeon
