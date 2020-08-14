@@ -38,7 +38,7 @@ public class Dungeon {
 		pillar4x = Integer.parseInt(specrooms[5].substring(0, 1));
 		pillar4y = Integer.parseInt(specrooms[5].substring(2, 3));
 		
-		System.out.println(entrancex + "   " + entrancey);
+		
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				//make entrance
@@ -78,6 +78,10 @@ public class Dungeon {
 	
 	public Room getRoom(int x, int y){
 		return dungeon[x][y];
+	}
+	
+	public void setRoom (int x, int y, Room room){
+		dungeon[x][y] = room;
 	}
 	
 	public int[] getEntrance(){
@@ -123,6 +127,63 @@ public class Dungeon {
 		}
 		return specificrooms;
 	}
+	
+	public void Vision(int x, int y) {
+		String vision= "";
+		for (int i = -1; i < 2; i++) {
+			String topstring = "";
+			String middlestring = "";
+			String bottomstring = "";
+			for (int j = -1; j < 2; j++){
+				String content = "";
+				try {
+					content = dungeon[x + i][y + j].getRoom();
+					String[] split = content.split("\n");
+					for (int h = 0; h < 3; h++) {
+						String sub =  split[h].substring(0,2);
+						if (h == 0) {
+							topstring += sub;
+						}
+						if (h == 1) {
+							middlestring += sub;
+						}
+						//System.out.println(split[h].substring(0,2));
+					}
+					if (i == 1) {
+						try {
+							if (dungeon[x][y].getRoom().split("\n")[2].contains("***") || dungeon[x+1][y].getRoom().split("\n")[2].contains("***")) {
+								bottomstring += "**";
+							}
+							else {
+								bottomstring += "*-";
+							}
+						}
+						catch (Exception e) {
+							bottomstring += "*-";
+						}
+					}
+				}
+				catch(Exception e) {}
+			}
+			String middleend = "";
+			if (dungeon[x][y].getRoom().split("\n")[1].contains("|") || dungeon[x][y+1].getRoom().split("\n")[2].contains("|")) {
+				middleend = "|";
+			}
+			else {
+				middleend = "*";
+			}
+			vision += topstring;
+			if (topstring != "") {
+				vision += "*" + "\n" + middlestring + middleend + "\n";
+			}
+			if (i == 1) {
+				vision += bottomstring + "*";
+			}
+			
+		}
+		System.out.println(vision);
+	}
+	
 	
 	//prints all the rooms and their contents as well as full map of dungeon
 	public String toString() {

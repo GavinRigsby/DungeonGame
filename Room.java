@@ -68,7 +68,7 @@ public class Room {
 		if (y == 0){
 			room += "*" + content + "|\n";
 		}
-		else if (y == size){
+		else if (y == size-1){
 			room += "|" + content + "*\n";
 		}
 		else {
@@ -76,7 +76,7 @@ public class Room {
 		}
 			
 		//bottom wall
-		if (x == size) {
+		if (x == size-1) {
 			room += "***\n";
 		}else {
 			room += "*-*\n";
@@ -107,7 +107,7 @@ public class Room {
 		}
 		if (contents[6]) {
 			
-			return itemstring + "a pillar of 00";
+			return itemstring + "a pillar of OO";
 		}
 		
 		String items = "";

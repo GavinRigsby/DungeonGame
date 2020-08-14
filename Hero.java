@@ -92,18 +92,23 @@ public abstract class Hero extends DungeonCharacter{
             this.inventory[0]--;
             this.addHitPoints(15);
         }else
-            System.out.println("Whoops...No Health Potions in your Inventory!");
+            System.out.println("Whoops...No Health Potions in your Inventory!\n");
     }
 
     public void addVisionPotion() {
         this.inventory[1]++;
     }
 
-    public void useVisionPotion () {
+    public boolean useVisionPotion () {
 
-        System.out.println("Whoops...No Vision Potions in your Inventory!");
-        
-    }// Needs Work...
+    	if(this.inventory[1] > 0) {
+            this.inventory[1]--;
+            return true;
+        }else {
+        	System.out.println("Whoops...No Vision Potions in your Inventory!\n");
+        	return false;
+        } 
+    }
 
     @Override
     public String toString() {
@@ -111,6 +116,6 @@ public abstract class Hero extends DungeonCharacter{
                 + "Hitpoints: " + super.getHitPoints() + "\n"
                 + "Total Healing Potions: " + this.inventory[0] + "\n"
                 + "Total Vision Potions: " + this.inventory[1] + "\n"
-                + "Total Pillars of OO Found: " + this.pillarsFound + "/4";
+                + "Total Pillars of OO Found: " + this.pillarsFound + "/4\n";
     }
 }
