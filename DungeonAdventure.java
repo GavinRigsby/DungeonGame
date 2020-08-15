@@ -1,7 +1,7 @@
 
 public class DungeonAdventure
 {
-   private static int Size = 5;
+   private static int Size = 7;
    private static Dungeon dungeon = new Dungeon(Size);
    private static Hero theHero;
    private static boolean playagain = true;

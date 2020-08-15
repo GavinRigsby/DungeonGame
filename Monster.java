@@ -23,8 +23,8 @@ public abstract class Monster extends DungeonCharacter{
     }
 
     public void subtractHitPoints(final int hp, final DungeonCharacter opponent) {
+    	this.heal();
         super.subtractHitPoints(hp, opponent);
-        this.heal();
     }
 
 	public void randomDrop(Hero opponent) {

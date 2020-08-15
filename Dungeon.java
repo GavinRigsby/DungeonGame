@@ -66,7 +66,7 @@ public class Dungeon {
 				//make other room
 				else {
 					//Chance of item spawn change decimal to change rates
-					boolean monsterchance = (Math.random() > .8);
+					boolean monsterchance = (Math.random() > .75);
 					boolean pitchance = (Math.random() > .9);
 					boolean healingchance = (Math.random() > .9);
 					boolean visionchance = (Math.random() > .9);

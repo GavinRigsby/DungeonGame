@@ -9,8 +9,8 @@ public class Healer extends Hero {
         int[] healRange = Details.getHealerDetails().getHealRange();
 
         hp = (int) (Math.random() * (healRange[1] - healRange[0] + 1)) + healRange[0];
+        System.out.println(super.getName() + " added [" + hp + "] points.");
         super.addHitPoints(hp);
-        System.out.println(super.getName() + " added [" + hp + "] points.\n" + "Total hit points remaining are: " + this.getHitPoints());
         System.out.println();
     }
 
